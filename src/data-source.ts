@@ -1,6 +1,8 @@
 import "reflect-metadata"
 import { DataSource } from "typeorm"
-import { User } from "./entity/User"
+import { Token } from "./entity/token.entity";
+import { Usuario } from "./entity/usuario.entity";
+import { VideoConferencia } from "./entity/videoconferencia.entity";
 
 export const AppDataSource = new DataSource({
     type: "mysql",
@@ -8,10 +10,10 @@ export const AppDataSource = new DataSource({
     port: 3306,
     username: "root",
     password: "",
-    database: "",
+    database: "videoconferencia",
     synchronize: true,
     logging: false,
-    entities: [User],
+    entities: [Usuario, VideoConferencia, Token],
     migrations: [],
     subscribers: [],
 })
