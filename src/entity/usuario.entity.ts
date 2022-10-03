@@ -1,4 +1,4 @@
-import { Entity, PrimaryGeneratedColumn, Column } from "typeorm"
+import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn } from "typeorm"
 
 @Entity()
 export class Usuario {
@@ -18,10 +18,10 @@ export class Usuario {
     @Column()
     correo: string
 
-    @Column()
+    @CreateDateColumn()
     fecha_registro: Date
 
-    @Column()
+    @CreateDateColumn()
     ultima_sesion: Date
 
     @Column()

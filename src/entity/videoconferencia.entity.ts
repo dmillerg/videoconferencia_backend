@@ -21,7 +21,7 @@ export class VideoConferencia {
     estado: string
 
     @CreateDateColumn()
-    fecha: string
+    fecha: Date
 
     @ManyToOne(type => Usuario)
     encargado: string
