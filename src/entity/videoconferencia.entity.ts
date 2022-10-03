@@ -18,7 +18,7 @@ export class VideoConferencia {
     citado_por: string
 
     @Column()
-    estado: string
+    estado: number
 
     @CreateDateColumn()
     fecha: Date
