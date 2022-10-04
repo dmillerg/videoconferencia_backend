@@ -2,6 +2,7 @@ import { LoginController } from "./controller/login.controller";
 import { UsuarioController } from "./controller/usuario.controller";
 import { VideoConferenciaController } from "./controller/videoconferencia.controller";
 import { AppDataSource } from "./data-source"
+import { Usuario } from "./entity/usuario.entity";
 
 const express = require('express')
 const bodyParser = require('body-parser');
@@ -33,20 +34,24 @@ AppDataSource.initialize().then(async () => {
     app.use('/apis', user_controller.router);
     app.use('/apis', login_controller.router);
     app.use('/apis', videoconferencia_controller.router);
-    app.get('/apis', function(req, res){
-console.log('sss');
+    app.get('/apis', function (req, res) {
+        console.log('sss');
 
     });
-    
+
 
     module.exports = app;
 
     // console.log("Inserting a new user into the database...")
-    // const user = new Usuario()
-    // user.usuario = "Timber"
-    // user.nombre = "Saw"
-    // user.ultima_session = "25"
-    // await AppDataSource.manager.save(user)
+    try {
+        const user = new Usuario();
+        user.id = 0
+        user.usuario = '(no asignado)';
+        user.rol = 'técnico';
+        await AppDataSource.manager.save(user)
+    } catch (e) {
+
+    }
     // console.log("Saved a new user with id: " + user.id)
 
     // console.log("Loading users from the database...")
@@ -55,7 +60,7 @@ console.log('sss');
 
     // console.log("Here you can setup and run express / fastify / any other framework.")
     console.log('Conexion con la DB SUCCESSFULL');
-    
+
     app.listen(port, () => console.log(`El servidor esta escuchando en el puerto ${port}!`));
 
 

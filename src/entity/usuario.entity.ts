@@ -1,4 +1,4 @@
-import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn } from "typeorm"
+import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, PrimaryColumn, Unique, TableUnique } from "typeorm"
 
 @Entity()
 export class Usuario {
@@ -6,7 +6,7 @@ export class Usuario {
     @PrimaryGeneratedColumn()
     id: number
 
-    @Column()
+    @Column({unique: true})
     usuario: string
 
     @Column()
