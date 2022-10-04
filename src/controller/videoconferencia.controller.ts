@@ -17,7 +17,7 @@ export class VideoConferenciaController {
         const token = req.query.token;
         const valid: any = await AppDataSource.manager.find(Token, { where: { token: token } });
         if (valid.length > 0) {
-            return res.status(200).send(await AppDataSource.manager.find(VideoConferencia));
+            return res.status(200).send(await AppDataSource.manager.find(VideoConferencia, {relations: ["encargado","tecnico_respaldo"]}));
         }
         return res.status(401).send({ message: 'Usted no tiene acceso a este componente' });
     }
@@ -89,6 +89,8 @@ export class VideoConferenciaController {
         const hora_inicio = req.body.hora_inicio;
         const hora_fin = req.body.hora_fin;
         const not_allowed = req.body.not_allowed;
+        const cant_personas = req.body.cant_personas;
+        const salon = req.body.salon;
 
         const valid: any = await AppDataSource.manager.find(Token, { where: { token: token } });
         if (valid.length > 0) {
@@ -104,6 +106,8 @@ export class VideoConferenciaController {
                 hora_inicio: hora_inicio,
                 hora_fin: hora_fin,
                 not_allowed: not_allowed,
+                cant_personas: cant_personas,
+                salon: salon,
             });
             return res.status(200).send({ message: 'videoconferencia actualizada correctamente' });
         }

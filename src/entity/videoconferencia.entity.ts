@@ -1,5 +1,5 @@
 import { type } from "os"
-import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, ManyToOne, ManyToMany } from "typeorm"
+import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, ManyToOne, ManyToMany, JoinColumn } from "typeorm"
 import { Usuario } from "./usuario.entity"
 
 @Entity()
@@ -24,10 +24,12 @@ export class VideoConferencia {
     fecha: Date
 
     @ManyToOne(type => Usuario)
-    encargado: string
+    @JoinColumn()
+    encargado: Usuario
 
     @ManyToOne(type => Usuario)
-    tecnico_respaldo: string
+    @JoinColumn()
+    tecnico_respaldo: Usuario
 
     @Column()
     mannana: boolean
