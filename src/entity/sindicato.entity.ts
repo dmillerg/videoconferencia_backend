@@ -10,6 +10,9 @@ export class Sindicato {
     @Column({unique: true})
     nombre: string
 
+    @Column({unique: true})
+    siglas: string
+
     @Column()
     descripcion: string
 

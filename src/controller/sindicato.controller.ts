@@ -27,11 +27,13 @@ export class SindicatoController {
         const valid: any = await AppDataSource.manager.find(Token, { where: { token: token } });
         if (valid.length > 0) {
             const nombre = req.body.nombre;
+            const siglas = req.body.siglas;
             const descripcion = req.body.descripcion;
             const piso = req.body.piso;
 
             const s = new Sindicato();
             s.nombre = nombre;
+            s.siglas = siglas;
             s.descripcion = descripcion;
             s.piso = piso;
             await AppDataSource.manager.save(Sindicato, s);
@@ -54,6 +56,7 @@ export class SindicatoController {
     public updateSindicato = async (req: Request, res: Response) => {
         const token = req.query.token;
         const nombre = req.body.nombre;
+        const siglas = req.body.siglas;
         const descripcion = req.body.descripcion;
         const piso = req.body.piso;
 
@@ -61,6 +64,7 @@ export class SindicatoController {
         if (valid.length > 0) {
             await AppDataSource.manager.update(Sindicato, req.params.id, {
                 nombre: nombre,
+                siglas: siglas,
                 descripcion: descripcion,
                 piso: piso,
             });
