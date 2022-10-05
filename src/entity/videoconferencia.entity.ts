@@ -1,5 +1,6 @@
 import { type } from "os"
 import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, ManyToOne, ManyToMany, JoinColumn } from "typeorm"
+import { Sindicato } from "./sindicato.entity"
 import { Usuario } from "./usuario.entity"
 
 @Entity()
@@ -55,4 +56,7 @@ export class VideoConferencia {
     @Column()
     salon: string
 
+    @ManyToOne(type=>Sindicato)
+    @JoinColumn()
+    sindicato: Sindicato;
 }

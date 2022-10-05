@@ -1,4 +1,5 @@
-import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, PrimaryColumn, Unique, TableUnique } from "typeorm"
+import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, ManyToOne, JoinColumn } from "typeorm"
+import { Piso } from "./pisos.entity"
 
 @Entity()
 export class Usuario {
@@ -27,7 +28,8 @@ export class Usuario {
     @Column()
     rol: string
 
-    @Column()
-    piso: string
+    @ManyToOne(type=>Piso)
+    @JoinColumn()
+    piso: Piso
 
 }

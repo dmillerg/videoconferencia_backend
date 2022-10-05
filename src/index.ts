@@ -1,4 +1,6 @@
 import { LoginController } from "./controller/login.controller";
+import { PisoController } from "./controller/piso.controller";
+import { SindicatoController } from "./controller/sindicato.controller";
 import { UsuarioController } from "./controller/usuario.controller";
 import { VideoConferenciaController } from "./controller/videoconferencia.controller";
 import { AppDataSource } from "./data-source"
@@ -29,11 +31,15 @@ AppDataSource.initialize().then(async () => {
     const user_controller = new UsuarioController();
     const login_controller = new LoginController();
     const videoconferencia_controller = new VideoConferenciaController();
+    const piso_controller = new PisoController();
+    const sindicato_controller = new SindicatoController();
 
     // Cargamos las rutas
     app.use('/apis', user_controller.router);
     app.use('/apis', login_controller.router);
     app.use('/apis', videoconferencia_controller.router);
+    app.use('/apis', piso_controller.router);
+    app.use('/apis', sindicato_controller.router);
     app.get('/apis', function (req, res) {
         console.log('sss');
 
