@@ -16,7 +16,7 @@ export class UsuarioController {
         const token = req.query.token;
         const valid: any = await AppDataSource.manager.find(Token, { where: { token: token } });
         if (valid.length > 0) {
-            return res.status(200).send(await AppDataSource.manager.find(Usuario));
+            return res.status(200).send(await AppDataSource.manager.find(Usuario, {relations: ['piso']}));
         }
         return res.status(401).send({ message: 'Usted no tiene acceso a este componente' });
     }
