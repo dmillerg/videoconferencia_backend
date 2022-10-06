@@ -33,11 +33,11 @@ AppDataSource.initialize().then(async () => {
     app.use('/apis', user_controller.router);
     app.use('/apis', login_controller.router);
     app.use('/apis', videoconferencia_controller.router);
-    app.get('/apis', function(req, res){
-console.log('sss');
+    app.get('/apis', function (req, res) {
+        console.log('sss');
 
     });
-    
+
 
     module.exports = app;
 
@@ -55,7 +55,7 @@ console.log('sss');
 
     // console.log("Here you can setup and run express / fastify / any other framework.")
     console.log('Conexion con la DB SUCCESSFULL');
-    
+
     app.listen(port, () => console.log(`El servidor esta escuchando en el puerto ${port}!`));
 
 
