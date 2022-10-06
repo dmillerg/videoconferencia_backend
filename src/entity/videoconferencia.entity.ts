@@ -1,5 +1,6 @@
 import { type } from "os"
-import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, ManyToOne, ManyToMany } from "typeorm"
+import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, ManyToOne, ManyToMany, JoinColumn } from "typeorm"
+import { Sindicato } from "./sindicato.entity"
 import { Usuario } from "./usuario.entity"
 
 @Entity()
@@ -18,16 +19,18 @@ export class VideoConferencia {
     citado_por: string
 
     @Column()
-    estado: string
+    estado: number
 
     @CreateDateColumn()
-    fecha: string
+    fecha: Date
 
     @ManyToOne(type => Usuario)
-    encargado: string
+    @JoinColumn()
+    encargado: Usuario
 
     @ManyToOne(type => Usuario)
-    tecnico_respaldo: string
+    @JoinColumn()
+    tecnico_respaldo: Usuario
 
     @Column()
     mannana: boolean
@@ -47,4 +50,13 @@ export class VideoConferencia {
     @Column()
     archivo: string
 
+    @Column()
+    cant_personas: number
+
+    @Column()
+    salon: string
+
+    @ManyToOne(type=>Sindicato)
+    @JoinColumn()
+    sindicato: Sindicato;
 }

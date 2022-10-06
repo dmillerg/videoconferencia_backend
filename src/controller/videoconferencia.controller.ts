@@ -17,12 +17,13 @@ export class VideoConferenciaController {
         const token = req.query.token;
         const valid: any = await AppDataSource.manager.find(Token, { where: { token: token } });
         if (valid.length > 0) {
-            return res.status(200).send(await AppDataSource.manager.find(VideoConferencia));
+            return res.status(200).send(await AppDataSource.manager.find(VideoConferencia, {relations: ["encargado","tecnico_respaldo"]}));
         }
         return res.status(401).send({ message: 'Usted no tiene acceso a este componente' });
     }
 
     public addVideoConferencia = async (req: Request, res: Response) => {
+        
         const token = req.query.token;
         const valid: any = await AppDataSource.manager.find(Token, { where: { token: token } });
         if (valid.length > 0) {
@@ -34,9 +35,12 @@ export class VideoConferenciaController {
             const tecnico_respaldo = req.body.tecnico_respaldo;
             const mannana = req.body.mannana;
             const tarde = req.body.tarde;
+            const fecha = req.body.fecha;
             const hora_inicio = req.body.hora_inicio;
             const hora_fin = req.body.hora_fin;
             const not_allowed = req.body.not_allowed;
+            const cant_personas = req.body.cant_personas;
+            const salon = req.body.salon;
 
 
             const vc = new VideoConferencia();
@@ -46,11 +50,14 @@ export class VideoConferenciaController {
             vc.estado = estado;
             vc.encargado = encargado;
             vc.tecnico_respaldo = tecnico_respaldo;
-            vc.mannana = mannana;
-            vc.tarde = tarde;
-            vc.hora_inicio = hora_inicio;
-            vc.hora_fin = hora_fin;
+            vc.mannana = mannana=='1'?true: false;
+            vc.tarde = tarde=='1'?true: false;
+            vc.fecha = new Date(fecha);
+            vc.hora_inicio = new Date(hora_inicio);
+            vc.hora_fin = new Date(hora_fin);
             vc.not_allowed = not_allowed;
+            vc.cant_personas = cant_personas;
+            vc.salon = salon;
             await AppDataSource.manager.save(VideoConferencia, vc);
             return res.status(200).send({ message: 'VideoConferencia agregada correctamente' });
         }
@@ -82,6 +89,8 @@ export class VideoConferenciaController {
         const hora_inicio = req.body.hora_inicio;
         const hora_fin = req.body.hora_fin;
         const not_allowed = req.body.not_allowed;
+        const cant_personas = req.body.cant_personas;
+        const salon = req.body.salon;
 
         const valid: any = await AppDataSource.manager.find(Token, { where: { token: token } });
         if (valid.length > 0) {
@@ -97,6 +106,8 @@ export class VideoConferenciaController {
                 hora_inicio: hora_inicio,
                 hora_fin: hora_fin,
                 not_allowed: not_allowed,
+                cant_personas: cant_personas,
+                salon: salon,
             });
             return res.status(200).send({ message: 'videoconferencia actualizada correctamente' });
         }
