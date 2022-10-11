@@ -23,8 +23,11 @@ export class UsuarioController {
 
     public addUsuario = async (req: Request, res: Response) => {
         const token = req.query.token;
+        
         const valid: any = await AppDataSource.manager.find(Token, { where: { token: token } });
         if (valid.length > 0) {
+            console.log(req.body);
+            
             const usuario = req.body.usuario;
             const password = req.body.password;
             const nombre = req.body.nombre;
@@ -38,18 +41,21 @@ export class UsuarioController {
                         return res.status(500).send({ message: 'En estos momentos no se puede por favor intentelo mas tarde' });
                     } else {
                         const user = new Usuario();
+                        user.usuario = usuario;
                         user.password = encrypted;
                         user.nombre = nombre;
                         user.correo = correo;
                         user.rol = rol;
+                        user.fecha_registro = new Date();
+                        user.ultima_sesion = new Date();
                         user.piso = piso;
                         await AppDataSource.manager.save(Usuario, user);
                         return res.status(200).send({ message: 'Usuario agregado correctamente' });
                     }
                 });
-            }
+            }else
             return res.status(400).send({ message: 'El usuario ya esta siendo usado' });
-        }
+        }else
         return res.status(401).send({ message: 'Usted no tiene acceso a este componente' });
     }
 
