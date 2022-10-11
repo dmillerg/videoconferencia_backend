@@ -1,4 +1,4 @@
-import { Entity, PrimaryGeneratedColumn, Column, OneToOne, JoinColumn } from "typeorm"
+import { Entity, PrimaryGeneratedColumn, Column, OneToOne, JoinColumn, ManyToOne } from "typeorm"
 import { Piso } from "./pisos.entity"
 
 @Entity()
@@ -16,7 +16,7 @@ export class Sindicato {
     @Column()
     descripcion: string
 
-    @OneToOne(type=>Piso)
+    @ManyToOne(type=>Piso)
     @JoinColumn()
     piso: Piso
 
