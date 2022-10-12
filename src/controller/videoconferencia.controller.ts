@@ -17,7 +17,7 @@ export class VideoConferenciaController {
         const token = req.query.token;
         const valid: any = await AppDataSource.manager.find(Token, { where: { token: token } });
         if (valid.length > 0) {
-            return res.status(200).send(await AppDataSource.manager.find(VideoConferencia, {relations: ["encargado","tecnico_respaldo"]}));
+            return res.status(200).send(await AppDataSource.manager.find(VideoConferencia, {relations: ["encargado","tecnico_respaldo","citado_por"]}));
         }
         return res.status(401).send({ message: 'Usted no tiene acceso a este componente' });
     }
