@@ -25,6 +25,8 @@ export class VideoConferenciaController {
     public addVideoConferencia = async (req: Request, res: Response) => {
         
         const token = req.query.token;
+        console.log(req.body);
+        
         const valid: any = await AppDataSource.manager.find(Token, { where: { token: token } });
         if (valid.length > 0) {
             const nombre = req.body.nombre;
@@ -41,6 +43,7 @@ export class VideoConferenciaController {
             const not_allowed = req.body.not_allowed;
             const cant_personas = req.body.cant_personas;
             const salon = req.body.salon;
+            const sindicato = req.body.sindicato;
 
 
             const vc = new VideoConferencia();
@@ -58,6 +61,7 @@ export class VideoConferenciaController {
             vc.not_allowed = not_allowed;
             vc.cant_personas = cant_personas;
             vc.salon = salon;
+            vc.sindicato = sindicato;
             await AppDataSource.manager.save(VideoConferencia, vc);
             return res.status(200).send({ message: 'VideoConferencia agregada correctamente' });
         }
