@@ -9,54 +9,55 @@ export class VideoConferencia {
     @PrimaryGeneratedColumn()
     id: number
 
-    @Column()
+    @Column({nullable: true})
     nombre: string
 
-    @Column()
+    @Column({nullable: true})
     descripcion: string
 
-    @Column()
-    citado_por: string
+    @ManyToOne(type => Usuario)
+    @JoinColumn()
+    citado_por: Usuario
 
-    @Column()
+    @Column({nullable: true})
     estado: number
 
-    @CreateDateColumn()
+    @CreateDateColumn({nullable: true})
     fecha: Date
 
-    @ManyToOne(type => Usuario)
+    @ManyToOne(type => Usuario, {nullable: true})
     @JoinColumn()
     encargado: Usuario
 
-    @ManyToOne(type => Usuario)
+    @ManyToOne(type => Usuario, {nullable: true})
     @JoinColumn()
     tecnico_respaldo: Usuario
 
-    @Column()
+    @Column({nullable: true})
     mannana: boolean
 
-    @Column()
+    @Column({nullable: true})
     tarde: boolean
 
-    @CreateDateColumn()
+    @CreateDateColumn({nullable: true})
     hora_inicio: Date
 
-    @CreateDateColumn()
+    @CreateDateColumn({nullable: true})
     hora_fin: Date
 
-    @Column()
+    @Column({nullable: true, default: false})
     not_allowed: boolean
 
-    @Column()
+    @Column({nullable: true})
     archivo: string
 
-    @Column()
+    @Column({nullable: true})
     cant_personas: number
 
-    @Column()
+    @Column({nullable: true})
     salon: string
 
-    @ManyToOne(type=>Sindicato)
+    @ManyToOne(type=>Sindicato, {nullable: true})
     @JoinColumn()
     sindicato: Sindicato;
 }
