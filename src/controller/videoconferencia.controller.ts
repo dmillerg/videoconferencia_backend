@@ -17,7 +17,7 @@ export class VideoConferenciaController {
         const token = req.query.token;
         const valid: any = await AppDataSource.manager.find(Token, { where: { token: token } });
         if (valid.length > 0) {
-            return res.status(200).send(await AppDataSource.manager.find(VideoConferencia, { relations: ["encargado", "tecnico_respaldo", "citado_por"] }));
+            return res.status(200).send(await AppDataSource.manager.find(VideoConferencia, { relations: ["encargado", "tecnico_respaldo", "citado_por", "sindicato"] }));
         }
         return res.status(401).send({ message: 'Usted no tiene acceso a este componente' });
     }
@@ -42,6 +42,7 @@ export class VideoConferenciaController {
             const not_allowed = req.body.not_allowed == 'true';
             const cant_personas = req.body.cant_personas;
             const salon = req.body.salon;
+            const sindicato = req.body.sindicato;
 
 
             const vc = new VideoConferencia();
@@ -59,6 +60,7 @@ export class VideoConferenciaController {
             vc.not_allowed = not_allowed;
             vc.cant_personas = cant_personas;
             vc.salon = salon;
+            vc.sindicato = sindicato;
             await AppDataSource.manager.save(VideoConferencia, vc);
             return res.status(200).send({ message: 'VideoConferencia agregada correctamente' });
         }
@@ -92,6 +94,7 @@ export class VideoConferenciaController {
         const not_allowed = req.body.not_allowed == 'true';
         const cant_personas = req.body.cant_personas;
         const salon = req.body.salon;
+        const sindicato = req.body.sindicato;
         console.log(req.body);
 
         const valid: any = await AppDataSource.manager.find(Token, { where: { token: token } });
@@ -110,6 +113,7 @@ export class VideoConferenciaController {
                 not_allowed: not_allowed,
                 cant_personas: cant_personas,
                 salon: salon,
+                sindicato: sindicato,
             });
             return res.status(200).send({ message: 'videoconferencia actualizada correctamente' });
         }
