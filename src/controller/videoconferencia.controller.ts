@@ -17,14 +17,14 @@ export class VideoConferenciaController {
         const token = req.query.token;
         const valid: any = await AppDataSource.manager.find(Token, { where: { token: token } });
         if (valid.length > 0) {
-            return res.status(200).send(await AppDataSource.manager.find(VideoConferencia, {relations: ["encargado","tecnico_respaldo","citado_por"]}));
+            return res.status(200).send(await AppDataSource.manager.find(VideoConferencia, { relations: ["encargado", "tecnico_respaldo", "citado_por"] }));
         }
         return res.status(401).send({ message: 'Usted no tiene acceso a este componente' });
     }
 
     public addVideoConferencia = async (req: Request, res: Response) => {
         console.log(req.body);
-        
+
         const token = req.query.token;
         const valid: any = await AppDataSource.manager.find(Token, { where: { token: token } });
         if (valid.length > 0) {
@@ -39,7 +39,7 @@ export class VideoConferenciaController {
             const fecha = req.body.fecha;
             const hora_inicio = req.body.hora_inicio;
             const hora_fin = req.body.hora_fin;
-            const not_allowed = req.body.not_allowed;
+            const not_allowed = req.body.not_allowed == 'true';
             const cant_personas = req.body.cant_personas;
             const salon = req.body.salon;
 
@@ -51,8 +51,8 @@ export class VideoConferenciaController {
             vc.estado = estado;
             vc.encargado = encargado;
             vc.tecnico_respaldo = tecnico_respaldo;
-            vc.mannana = mannana=='1'?true: false;
-            vc.tarde = tarde=='1'?true: false;
+            vc.mannana = mannana == '1' ? true : false;
+            vc.tarde = tarde == '1' ? true : false;
             vc.fecha = new Date(fecha);
             vc.hora_inicio = new Date(hora_inicio);
             vc.hora_fin = new Date(hora_fin);
@@ -89,10 +89,10 @@ export class VideoConferenciaController {
         const tarde = req.body.tarde;
         const hora_inicio = req.body.hora_inicio;
         const hora_fin = req.body.hora_fin;
-        const not_allowed = req.body.not_allowed;
+        const not_allowed = req.body.not_allowed == 'true';
         const cant_personas = req.body.cant_personas;
         const salon = req.body.salon;
-console.log(req.body);
+        console.log(req.body);
 
         const valid: any = await AppDataSource.manager.find(Token, { where: { token: token } });
         if (valid.length > 0) {
