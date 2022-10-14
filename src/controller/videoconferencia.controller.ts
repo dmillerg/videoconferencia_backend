@@ -23,6 +23,7 @@ export class VideoConferenciaController {
     }
 
     public addVideoConferencia = async (req: Request, res: Response) => {
+        console.log(req.body);
         
         const token = req.query.token;
         const valid: any = await AppDataSource.manager.find(Token, { where: { token: token } });
