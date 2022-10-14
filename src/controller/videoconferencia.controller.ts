@@ -92,6 +92,7 @@ export class VideoConferenciaController {
         const not_allowed = req.body.not_allowed;
         const cant_personas = req.body.cant_personas;
         const salon = req.body.salon;
+console.log(req.body);
 
         const valid: any = await AppDataSource.manager.find(Token, { where: { token: token } });
         if (valid.length > 0) {

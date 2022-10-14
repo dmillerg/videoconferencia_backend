@@ -15,7 +15,7 @@ export class VideoConferencia {
     @Column({nullable: true})
     descripcion: string
 
-    @ManyToOne(type => Usuario)
+    @ManyToOne(type => Usuario,{nullable: true})
     @JoinColumn()
     citado_por: Usuario
 

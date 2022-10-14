@@ -28,7 +28,7 @@ export class Usuario {
     @Column()
     rol: string
 
-    @ManyToOne(type=>Piso)
+    @ManyToOne(type=>Piso, {nullable: true})
     @JoinColumn()
     piso: Piso
 
