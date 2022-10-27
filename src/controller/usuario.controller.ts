@@ -16,18 +16,18 @@ export class UsuarioController {
         const token = req.query.token;
         const valid: any = await AppDataSource.manager.find(Token, { where: { token: token } });
         if (valid.length > 0) {
-            return res.status(200).send(await AppDataSource.manager.find(Usuario, {relations: ['piso']}));
+            return res.status(200).send(await AppDataSource.manager.find(Usuario, { relations: ['piso'] }));
         }
         return res.status(401).send({ message: 'Usted no tiene acceso a este componente' });
     }
 
     public addUsuario = async (req: Request, res: Response) => {
         const token = req.query.token;
-        
+
         const valid: any = await AppDataSource.manager.find(Token, { where: { token: token } });
         if (valid.length > 0) {
             console.log(req.body);
-            
+
             const usuario = req.body.usuario;
             const password = req.body.password;
             const nombre = req.body.nombre;
@@ -53,10 +53,10 @@ export class UsuarioController {
                         return res.status(200).send({ message: 'Usuario agregado correctamente' });
                     }
                 });
-            }else
-            return res.status(400).send({ message: 'El usuario ya esta siendo usado' });
-        }else
-        return res.status(401).send({ message: 'Usted no tiene acceso a este componente' });
+            } else
+                return res.status(400).send({ message: 'El usuario ya esta siendo usado' });
+        } else
+            return res.status(401).send({ message: 'Usted no tiene acceso a este componente' });
     }
 
     public deleteUsuario = async (req: Request, res: Response) => {
@@ -92,10 +92,37 @@ export class UsuarioController {
         return res.status(401).send({ message: 'Usted no tiene acceso a este componente' });
     }
 
+    public cambiarPass = async (req: Request, res: Response) => {
+        console.log('dasd');
+
+        const token = req.query.token;
+
+        const body = req.body;
+        const id = body.id;
+        const password = body.password;
+
+        const valid: any = await AppDataSource.manager.find(Token, { where: { token: token } });
+        if (valid.length > 0) {
+            bcrypt.hash(password, 10, async (err, encrypted) => {
+                if (err) {
+                    return res.status(500).send({ message: 'En estos momentos no se puede por favor intentelo mas tarde' });
+                } else {
+                    await AppDataSource.manager.update(Usuario, id, {
+                        password: encrypted
+                    });
+                    return res.status(200).send({ message: 'contraseña cambiada correctamente' });
+
+                }
+            });
+        } else
+            return res.status(401).send({ message: 'Usted no tiene acceso a este componente' });
+    }
+
     public routes() {
         this.router.get('/usuario', this.getUsuario);
         this.router.delete('/usuario/:id', this.deleteUsuario);
         this.router.post('/usuario', this.addUsuario);
         this.router.put('/usuario/:id', this.updateUsuario);
+        this.router.put('/usuario', this.cambiarPass);
     }
 }
