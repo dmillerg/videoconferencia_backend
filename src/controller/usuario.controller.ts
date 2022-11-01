@@ -1,7 +1,10 @@
 import { Router, Request, Response } from 'express'
+import moment = require('moment');
+import { MoreThanOrEqual } from 'typeorm';
 import { AppDataSource } from '../data-source';
 import { Token } from '../entity/token.entity';
 import { Usuario } from '../entity/usuario.entity';
+import { VideoConferencia } from '../entity/videoconferencia.entity';
 const bcrypt = require("bcrypt");
 
 export class UsuarioController {
@@ -118,11 +121,27 @@ export class UsuarioController {
             return res.status(401).send({ message: 'Usted no tiene acceso a este componente' });
     }
 
+    public notificaciones = async (req: Request, res: Response) => {
+        const token = req.query.token;
+        const valid: any = await AppDataSource.manager.find(Token, { where: { token: token } });
+        if (valid.length > 0) {
+            const id = req.query.id;
+            const notificaciones = await AppDataSource.manager.find(VideoConferencia,
+                {
+                    relations: ["encargado", "tecnico_respaldo", "citado_por", "sindicato"],
+                    where: {fecha: MoreThanOrEqual(new Date()), estado: 1}
+                });
+            return res.status(200).send(notificaciones.filter(e=>e.encargado.id = id || e.tecnico_respaldo.id==id || e.citado_por.id == id));
+        } else
+            return res.status(401).send({ message: 'Usted no tiene acceso a este componente' });
+    }
+
     public routes() {
         this.router.get('/usuario', this.getUsuario);
         this.router.delete('/usuario/:id', this.deleteUsuario);
         this.router.post('/usuario', this.addUsuario);
         this.router.put('/usuario/:id', this.updateUsuario);
         this.router.put('/usuario', this.cambiarPass);
+        this.router.get('/notificaciones', this.notificaciones);
     }
 }
