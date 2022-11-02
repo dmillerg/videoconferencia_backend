@@ -131,7 +131,11 @@ export class UsuarioController {
                     relations: ["encargado", "tecnico_respaldo", "citado_por", "sindicato"],
                     where: {fecha: MoreThanOrEqual(new Date()), estado: 1}
                 });
-            return res.status(200).send(notificaciones.filter(e=>e.encargado.id = id || e.tecnico_respaldo.id==id || e.citado_por.id == id));
+                // console.log('id=>',id);
+                
+                // console.log(notificaciones.filter(e=>e.encargado.id == id || e.tecnico_respaldo.id==id || e.citado_por.id == id));
+                
+            return res.status(200).send(notificaciones.filter(e=>e.encargado.id == id || e.tecnico_respaldo.id==id || e.citado_por.id == id));
         } else
             return res.status(401).send({ message: 'Usted no tiene acceso a este componente' });
     }
