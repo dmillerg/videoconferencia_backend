@@ -129,7 +129,7 @@ export class UsuarioController {
             const notificaciones = await AppDataSource.manager.find(VideoConferencia,
                 {
                     relations: ["encargado", "tecnico_respaldo", "citado_por", "sindicato"],
-                    where: {fecha: MoreThanOrEqual(new Date()), estado: 1}
+                    where: {fecha: MoreThanOrEqual(new Date())}
                 });
                 // console.log('id=>',id);
                 

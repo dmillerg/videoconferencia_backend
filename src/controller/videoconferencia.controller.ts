@@ -27,7 +27,7 @@ export class VideoConferenciaController {
 
         const token = req.query.token;
         console.log(req.body);
-        
+
         const valid: any = await AppDataSource.manager.find(Token, { where: { token: token } });
         if (valid.length > 0) {
             const nombre = req.body.nombre;
@@ -118,8 +118,8 @@ export class VideoConferenciaController {
                 sindicato: sindicato,
             });
             return res.status(200).send({ message: 'videoconferencia actualizada correctamente' });
-        }
-        return res.status(401).send({ message: 'Usted no tiene acceso a este componente' });
+        } else
+            return res.status(401).send({ message: 'Usted no tiene acceso a este componente' });
     }
 
     public routes() {
